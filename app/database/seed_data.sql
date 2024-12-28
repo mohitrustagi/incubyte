@@ -20,6 +20,6 @@ INSERT INTO doctor_locations(id, doctor_id, location_id) VALUES (2, 1, 1);
 
 
 INSERT INTO doctor_schedules (id, doctor_id, location_id, day_of_the_week, start_time, end_time) VALUES
-(0, 0, 'Monday', '14:00', '16:00'),
-(1, 0, 'Tuesday', '14:00', '16:00'),
+(0, 0, 0, 'Monday', '14:00', '16:00'),
+(1, 0, 1, 'Tuesday', '14:00', '16:00'),
 (2, 1, 1, 'Wednesday', '10:00', '12:00');

@@ -1,6 +1,11 @@
 from pydantic import BaseModel
-from datetime import time
+from datetime import datetime, time
 from enum import Enum
+
+
+class Patient(BaseModel):
+    id: int
+    name: str
 
 
 class Doctor(BaseModel):
@@ -24,14 +29,14 @@ class DoctorLocation(BaseModel):
     location_id: int
 
 
-class DayOfWeek(int, Enum):
-    SUNDAY = 0
-    MONDAY = 1
-    TUESDAY = 2
-    WEDNESDAY = 3
-    THURSDAY = 4
-    FRIDAY = 5
-    SATURDAY = 6
+class DayOfWeek(str, Enum):
+    SUNDAY = 'Sunday' 
+    MONDAY = 'Monday'
+    TUESDAY = 'Tuesday'
+    WEDNESDAY = 'Wednesday'
+    THURSDAY = 'Thursday'
+    FRIDAY = 'Friday'
+    SATURDAY = 'Saturday'
 
 
 class DoctorSchedule(BaseModel):
@@ -40,6 +45,18 @@ class DoctorSchedule(BaseModel):
     """
     id: int
     doctor_id: int
+    location_id: int
     day_of_the_week: DayOfWeek
     start_time: time
     end_time: time
+
+
+class DoctorAppointment(BaseModel):
+    """
+    This represents a patient's appointment to see a doctor.
+    """
+    id: int
+    patient_id: int
+    doctor_schedule_id: int
+    appointment_time: datetime
+

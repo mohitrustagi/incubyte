@@ -117,3 +117,10 @@ With that, let's jump right in!
 ### Who do I talk to? ###
 * If you have any questions prior to your interview, please reach out to your designated Incubyte recruiting contact and he/she will get back to you as soon as possible.
 * If you have any feedback on the interview question after you're done, let us know, we're always looking into improving the interview process. Thanks!
+
+
+
+### Developer Notes
+1. Doctors schedules are initially stored into doctor_schedules table on server startup.
+2. Patients are treated on first come first serve basis although patients will request an appointment in the given doctor schedule slots only.
+3. There is no concept of conflict amongst the patients booking an appointment slot. Patients are queued if they arrive within the timeslot. 

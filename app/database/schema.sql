@@ -45,6 +45,8 @@ CREATE TABLE doctor_schedules (
 CREATE TABLE doctor_appointments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   patient_id INTEGER NOT NULL,
-  doctor_schedule_id INTEGER NOT NULL,
-  appointment_datetime TIMESTAMP NOT NULL
+  doctor_id INTEGER NOT NULL,
+  location TEXT NOT NULL,
+  appointment_datetime TIMESTAMP NOT NULL,
+  status TEXT DEFAULT 'booked'
 );

@@ -57,6 +57,8 @@ class DoctorAppointment(BaseModel):
     """
     id: int
     patient_id: int
-    doctor_schedule_id: int
-    appointment_time: datetime
+    doctor_id: int
+    location: str
+    appointment_datetime: datetime
+    status: str  
 

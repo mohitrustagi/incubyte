@@ -121,6 +121,13 @@ With that, let's jump right in!
 
 
 ### Developer Notes
-1. Doctors schedules are initially stored into doctor_schedules table on server startup.
-2. Patients are treated on first come first serve basis although patients will request an appointment in the given doctor schedule slots only.
-3. There is no concept of conflict amongst the patients booking an appointment slot. Patients are queued if they arrive within the timeslot. 
+1. Sample valid payload to create an appointment
+{
+  "patient_id": 0,
+  "doctor_id": 0,
+  "location": "string",
+  "appointment_datetime": "2025-11-10T14:05:41.710"
+}
+appointment_datetime field is not timezone aware. So please do not add 'Z' at the end.
+2. Assuming appointment datetime is as per the doctor's schedule. 
+

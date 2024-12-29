@@ -46,9 +46,19 @@ def create_app() -> FastAPI:
     def get_doctor_locations(doctor_id: int):
         return doctor_service.list_doctor_locations(doctor_id=doctor_id)
 
-    @app.post('/doctor/availability')
+    @app.post('/doctor/appointments')
     def add_appointment(request: AddAppointmentRequest):
-        return appointment_service.add_appointment(patient_id=request.patient_id, doctor_schedule_id=request.doctor_schedule_id, appointment_datetime=request.appointment_datetime)
+        id = appointment_service.add_appointments(
+            patient_id=request.patient_id,
+            doctor_id=request.doctor_id, 
+            location=request.location, 
+            appointment_datetime=request.appointment_datetime)
+        return {'id': id}
+
+    @app.get('/doctor/{doctor_id}/appointments')
+    def list_appointments(doctor_id: int):
+        return appointment_service.list_appointments(doctor_id)
+
 
     @app.exception_handler(NotFoundException)
     async def not_found(request: Request, exc: NotFoundException):

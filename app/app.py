@@ -55,6 +55,11 @@ def create_app() -> FastAPI:
             appointment_datetime=request.appointment_datetime)
         return {'id': id}
 
+    @app.delete('/appointments/{appointment_id}')
+    def cancel_appointment(appointment_id: int):
+        appointment_service.cancel_appointment(appointment_id)
+        return {"status": f"Appointment with id {appointment_id} cancelled!"}
+
     @app.get('/doctor/{doctor_id}/appointments')
     def list_appointments(doctor_id: int):
         return appointment_service.list_appointments(doctor_id)

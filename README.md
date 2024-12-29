@@ -121,13 +121,23 @@ With that, let's jump right in!
 
 
 ### Developer Notes
-1. Sample valid payload to create an appointment
+1. Three API added - 
+a) GET /doctor/{doctor_id}/appointments
+b) DELETE /appointments/{appointment_id}
+c) POST /doctor/appointments
+
+2. Sample valid payload to create an appointment
 {
   "patient_id": 0,
   "doctor_id": 0,
   "location": "string",
   "appointment_datetime": "2025-11-10T14:05:41.710"
 }
-appointment_datetime field is not timezone aware. So please do not add 'Z' at the end.
-2. Assuming appointment datetime is as per the doctor's schedule. 
+
+Note: appointment_datetime field is not timezone aware. So please do not add 'Z' at the end.
+
+3. Assuming appointment datetime is as per the doctor's schedule and not invalid. 
+4. Same patient can book an multiple appointment at the same time for different doctors. 
+
+
 

@@ -45,3 +45,10 @@ class AvailabilityService:
             DoctorAppointment(**res) for res in dict_result
         ]
 
+
+    def cancel_appointment(self, appointment_id):
+        update_query = f"UPDATE doctor_appointments set status='cancelled' where id={appointment_id}"
+        self.db.execute(update_query)
+
+
+

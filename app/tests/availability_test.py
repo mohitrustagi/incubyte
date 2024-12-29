@@ -44,10 +44,13 @@ def test_list_appointments(client: TestClient):
     json_response = response.json()
     assert(len(json_response)) == 1
 
-def cancel_user_appointment(client: TestClient):
+def test_cancel_user_appointment(client: TestClient):
     resp = client.post('/doctor/appointments', json=(dict(patient_id='0', doctor_id='0', location='location', appointment_datetime='2025-12-29T12:36:46.121')))
     assert resp.status_code == 200
-    
+    appointment_id = resp.json()['id']
+    resp = client.delete('/appointments/{appointment_id}')
+    json_response = resp.json()
+
 
 
 

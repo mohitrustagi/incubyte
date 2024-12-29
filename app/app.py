@@ -2,8 +2,9 @@ from typing import Optional
 from fastapi import FastAPI, Request, Response
 from fastapi.responses import RedirectResponse
 from app.database.db import DB
-from app.models.error import NotFoundException
-from app.models import AddDoctorRequest
+from app.models.error import NotFoundException, UnprocessableEntity
+from app.models import AddDoctorRequest, AddAppointmentRequest
+from app.services.availability_service import AvailabilityService
 from app.services.doctor_service import DoctorService, InDatabaseDoctorService, InMemoryDoctorService
 from app.settings import Settings
 
@@ -15,6 +16,7 @@ def create_app() -> FastAPI:
         db = DB()
         db.init_if_needed()
         doctor_service = InDatabaseDoctorService(db=db)
+        appointment_service = AvailabilityService(db=db)
     else:
         doctor_service = InMemoryDoctorService()
         doctor_service.seed()
@@ -44,11 +46,32 @@ def create_app() -> FastAPI:
     def get_doctor_locations(doctor_id: int):
         return doctor_service.list_doctor_locations(doctor_id=doctor_id)
 
-    # Add new endpoints here! #
+    @app.post('/doctor/appointments')
+    def add_appointment(request: AddAppointmentRequest):
+        id = appointment_service.add_appointments(
+            patient_id=request.patient_id,
+            doctor_id=request.doctor_id, 
+            location=request.location, 
+            appointment_datetime=request.appointment_datetime)
+        return {'id': id}
+
+    @app.delete('/appointments/{appointment_id}')
+    def cancel_appointment(appointment_id: int):
+        appointment_service.cancel_appointment(appointment_id)
+        return {"status": f"Appointment with id {appointment_id} cancelled!"}
+
+    @app.get('/doctor/{doctor_id}/appointments')
+    def list_appointments(doctor_id: int):
+        return appointment_service.list_appointments(doctor_id)
+
 
     @app.exception_handler(NotFoundException)
     async def not_found(request: Request, exc: NotFoundException):
         return Response(status_code=404)
+
+    @app.exception_handler(UnprocessableEntity)
+    async def unprocessable_entity(request: Request, exc: NotFoundException):
+        return Response(status_code=422)
 
     @app.on_event('shutdown')
     def shutdown():

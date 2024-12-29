@@ -117,3 +117,27 @@ With that, let's jump right in!
 ### Who do I talk to? ###
 * If you have any questions prior to your interview, please reach out to your designated Incubyte recruiting contact and he/she will get back to you as soon as possible.
 * If you have any feedback on the interview question after you're done, let us know, we're always looking into improving the interview process. Thanks!
+
+
+
+### Developer Notes
+1. Three API added - 
+a) GET /doctor/{doctor_id}/appointments
+b) DELETE /appointments/{appointment_id}
+c) POST /doctor/appointments
+
+2. Sample valid payload to create an appointment
+{
+  "patient_id": 0,
+  "doctor_id": 0,
+  "location": "string",
+  "appointment_datetime": "2025-11-10T14:05:41.710"
+}
+
+Note: appointment_datetime field is not timezone aware. So please do not add 'Z' at the end.
+
+3. Assuming appointment datetime is as per the doctor's schedule and not invalid. 
+4. Same patient can book an multiple appointment at the same time for different doctors. 
+
+
+

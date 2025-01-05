@@ -14,7 +14,8 @@ def mode(request) -> None:
 
 
 def test_create_appointment(client: TestClient):
-    pass
+    response = client.post('/doctor/appointments', json=(dict(patient_id='0', doctor_id='0', location='Lucknow', appointment_datetime='2025-12-29T12:36:46.121')))
+    assert response.status_code == 200
 
 def test_invalid_patient(client: TestClient):
     response = client.post('/doctor/appointments', json=(dict(patient_id='InvalidID', doctor_schedule_id='23', appointment_datetime='')))
@@ -48,10 +49,8 @@ def test_cancel_user_appointment(client: TestClient):
     resp = client.post('/doctor/appointments', json=(dict(patient_id='0', doctor_id='0', location='location', appointment_datetime='2025-12-29T12:36:46.121')))
     assert resp.status_code == 200
     appointment_id = resp.json()['id']
-    resp = client.delete('/appointments/{appointment_id}')
-    json_response = resp.json()
-
-
+    resp = client.delete(f'/appointments/{appointment_id}')
+    resp.status_code == 200
 
 
 
